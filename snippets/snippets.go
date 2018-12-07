@@ -8,6 +8,7 @@ import "fmt"
 import "time"
 import "encoding/json"
 import str "strings"
+import "strconv"
 
 func main() {
 
@@ -107,6 +108,9 @@ func main() {
 
 	// String funcs
 	strFunc()
+
+	// conversion functions in package strconv
+	conversions()
 }
 
 // funtion
@@ -165,6 +169,7 @@ func jsonFunc() {
 func  strFunc() {
 	// Hold reference to a function
 	var p=fmt.Println
+	p()
 	p("String functions")
 	p("================")
 	p("Contains:  ", str.Contains("test", "es"))
@@ -182,4 +187,28 @@ func  strFunc() {
 	p()
 	p("Len: ", len("hello"))
     p("Char:", "hello"[1], string("hello"[1]))
+}
+
+// Convert bsic datatypes from/to string
+func conversions() {
+	var someStr string
+
+	// convert string to number
+	someStr = "32"
+	i, _ := strconv.Atoi(someStr)
+	
+	// The parse functions return the widest type (float64, int64, and uint64), but if the size argument 
+	// specifies a narrower width the result can be converted to that narrower type without data loss
+	// multiple Parse?? funcs available
+	i64, _ := strconv.ParseInt(someStr, 10, 32)
+	i32 := int32(i64)
+	// convert string to boolean
+	someStr = "true"
+	b, _ := strconv.ParseBool(someStr)
+
+	fmt.Println("\nstrconv.Atoi=", i, " i32=", i32, " bool=", b)
+
+	// Convert basic types to string 
+	// multiple Format??? functions
+	someStr = strconv.FormatInt(int64(i32), 10)
 }

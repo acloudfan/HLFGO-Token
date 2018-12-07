@@ -19,5 +19,25 @@ git clone https://github.com/acloudfan/HLFGO-Token.git token
 > 
 
 # ERC20
+
 > . set-env.sh   acme  *OR*   > . set-env.sh   budget 
-> set-chain-env.sh  -l golang  -p token/ERC20  -n erc20 -v 1.0 -c '{"Args":["init","ACFT",100,"A Cloud Fan Token!!!]}' -C airlinechannel 
+
+Init
+====
+export CONSTRUCTOR='{"Args":["init","ACFT","A Cloud Fan Token!!!","raj"]}'
+> set-chain-env.sh  -l golang  -p token/ERC20  -n erc20 -v 1.0 -c '{"Args":["init","ACFT","1000","A Cloud Fan Token!!!","raj"]}' -C airlinechannel 
+
+ set-chain-env.sh -c '$CONSTRUCTOR'
+
+  set-chain-env.sh -c '{"Args":["init","100","ACFT","ACloudFanToken!!!","raj"]}'
+
+Queries
+=======
+> set-chain-env.sh -q '{"Args":["totalSupply"]}'
+> set-chain-env.sh -q '{"Args":["balanceOf","sam"]}'
+
+Invoke
+======
+> set-chain-env.sh -i '{"Args":["transfer","raj","sam","100"]}'
+
+
