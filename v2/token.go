@@ -1,10 +1,8 @@
 package main
 /**
- * v1\token
+ * tokenv2
  * Shows the  
- *    A) implementation of the Chaincode interface
- *    B) use of Start function in main method
- *    C) use or Error | Success for Response creation
+ *    A) Use of Logger
  **/
 import (
 	"fmt"
@@ -20,12 +18,19 @@ import (
 type TokenChaincode struct {
 }
 
+// V2
+
+// ChaincodeName - Create an instance of the Logger
+const ChaincodeName = "tokenv2"
+var logger = shim.NewLogger(ChaincodeName)
 
 // Init Implements the Init method
 func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 
 	// Simply print a message
-	fmt.Println("Init executed")
+	// fmt.Println("Init executed")
+
+	logger.Debug("Init executed")
 
 	// Return success
 	return shim.Success(nil)
@@ -33,7 +38,8 @@ func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Respons
 
 // Invoke method
 func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	fmt.Println("Invoke executed ")
+	//fmt.Println("Invoke executed ")
+	logger.Debug("Init executed")
 
 	return shim.Success(nil)
 }
@@ -43,6 +49,8 @@ func main() {
 	fmt.Printf("Started Chaincode.")
 	err := shim.Start(new(TokenChaincode))
 	if err != nil {
-		fmt.Printf("Error starting chaincode: %s", err)
+		//fmt.Printf("Error starting chaincode: %s", err)
+		// V2
+		logger.Error("Error starting chaincode: %s", err)
 	}
 }

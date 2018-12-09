@@ -12,11 +12,30 @@ git clone https://github.com/acloudfan/HLFGO-Token.git token
 > set-chain-env.sh  -l golang  -p token/v1  -n token -v 1.0 -c '{"Args":["init"]}' -C airlinechannel 
 
 {v1}
+Both query & invoke execute the invoke function in chaincode
 > set-chain-env.sh  -q '{"Args":["get"]}'
 > set-chain-env.sh  -i '{"Args":["set"]}'
 
 {v2}
-> 
+Using the Logger API to log messages
+
+{v3}
+Getting the information in chaincode
+- Transaction ID
+- Timestamp
+- Channel ID
+
+{v4}
+Getting the arguments in a chaincode
+> set-chain-env.sh -q '{"Args":["FunctionName","Arg-1", "Arg-2"]}'
+> chain.sh  query
+
+
+
+
+
+
+
 
 # ERC20
 
@@ -27,9 +46,9 @@ Init
 export CONSTRUCTOR='{"Args":["init","ACFT","A Cloud Fan Token!!!","raj"]}'
 > set-chain-env.sh  -l golang  -p token/ERC20  -n erc20 -v 1.0 -c '{"Args":["init","ACFT","1000","A Cloud Fan Token!!!","raj"]}' -C airlinechannel 
 
- set-chain-env.sh -c '$CONSTRUCTOR'
+set-chain-env.sh -c '$CONSTRUCTOR'
 
-  set-chain-env.sh -c '{"Args":["init","100","ACFT","ACloudFanToken!!!","raj"]}'
+set-chain-env.sh -c '{"Args":["init","100","ACFT","A Cloud Fan Token!!!","raj"]}'
 
 Queries
 =======
@@ -39,5 +58,5 @@ Queries
 Invoke
 ======
 > set-chain-env.sh -i '{"Args":["transfer","raj","sam","100"]}'
-
+> set-chain-env.sh -i '{"Args":["transfer","sam","peter","50"]}'
 

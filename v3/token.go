@@ -1,10 +1,10 @@
 package main
 /**
- * v1\token
- * Shows the  
- *    A) implementation of the Chaincode interface
- *    B) use of Start function in main method
- *    C) use or Error | Success for Response creation
+ * tokenv3
+ * Shows the use of ChaincodeStub API
+ *    A) Transaction information
+ *    B) Transaction timestamp
+ *    C) Channel ID
  **/
 import (
 	"fmt"
@@ -12,8 +12,9 @@ import (
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	// peer.Response is in the peer package
-    "github.com/hyperledger/fabric/protos/peer"
-
+	"github.com/hyperledger/fabric/protos/peer"
+	// Used for formatting the timestamp
+	"time"
 )
 
 // TokenChaincode Represents our chaincode object
@@ -34,6 +35,16 @@ func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Respons
 // Invoke method
 func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	fmt.Println("Invoke executed ")
+
+	// V3
+	fmt.Printf("GetTxID() => %s\n", stub.GetTxID())
+
+	// V3
+	TxTimestamp, _ := stub.GetTxTimestamp()
+	fmt.Printf("GetTxTimestamp() => %s\n", time.Unix(TxTimestamp.GetSeconds(),0))
+
+	// V4
+	fmt.Println("GetChannelID() =>", stub.GetChannelID())
 
 	return shim.Success(nil)
 }

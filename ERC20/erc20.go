@@ -1,6 +1,8 @@
 /**
  * This implements the ERC20 standard token
  * https://theethereum.wiki/w/index.php/ERC20_Token_Standard
+ * The ERC20 standard is used for defining tokens in Ethereum. This is an implementation
+ * of the same standard on Fabric.
  **/
  package main
 
@@ -209,12 +211,13 @@ func totalSupply(stub shim.ChaincodeStubInterface) peer.Response {
 
 func errorResponse(err string, code  uint ) peer.Response {
 	codeStr := strconv.FormatUint(uint64(code), 10)
-	errorString := "{\"error\": \"" + err +"\", \"code\":"+codeStr+" \" }"
+	// errorString := "{\"error\": \"" + err +"\", \"code\":"+codeStr+" \" }"
+	errorString := "{\"error\":" + err +", \"code\":"+codeStr+" \" }"
 	return shim.Error(errorString)
 }
 
 func successResponse(dat string) peer.Response {
-	success := "{\"response\": \"" + dat +"\", \"code\": 0 }"
+	success := "{\"response\": " + dat +", \"code\": 0 }"
 	return shim.Success([]byte(success))
 }
 
