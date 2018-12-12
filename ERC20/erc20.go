@@ -173,7 +173,7 @@ func totalSupply(stub shim.ChaincodeStubInterface) peer.Response {
 	bytes, _ := stub.GetState(OwnerPrefix+from)
 	if len(bytes) == 0 {
 		// That means 0 token balance
-		return errorResponse("Balance in to MUST be > 0!!!", 703)
+		return errorResponse("Balance MUST be > 0!!!", 703)
 	}
 	fromBalance, _ := strconv.Atoi(string(bytes))
 	if fromBalance < amount {
@@ -223,6 +223,7 @@ func successResponse(dat string) peer.Response {
 
 // Chaincode registers with the Shim on startup
 func main() {
+	fmt.Println("Started....")
 	err := shim.Start(new(ERC20TokenChaincode))
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)

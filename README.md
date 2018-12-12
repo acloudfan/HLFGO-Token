@@ -30,6 +30,19 @@ Getting the arguments in a chaincode
 > set-chain-env.sh -q '{"Args":["FunctionName","Arg-1", "Arg-2"]}'
 > chain.sh  query
 
+{v5}
+Shows the use of GetState | PutState | DelState
+> set-chain-env.sh -q '{"Args":["get"]}'
+> set-chain-env.sh -i '{"Args":["set"]}'
+> set-chain-env.sh -i '{"Args":["delete"]}'
+
+{v6}
+Solution to the exercise. Create a new function - call it AddState
+
+{v7}
+Multiple tokens - functions will apply to the token - so pass an additional parameter
+Solution to the exercise
+
 
 
 
