@@ -9,13 +9,14 @@ package main
  **/
 
 import (
+	// For printing messages on console
 	"fmt"
 
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 
 	// peer.Response is in the peer package
-	"github.com/hyperledger/fabric/protos/peer"
+    "github.com/hyperledger/fabric/protos/peer"
 )
 
 // TokenChaincode Represents our chaincode object
@@ -41,9 +42,9 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 
 // Chaincode registers with the Shim on startup
 func main() {
-	
+
 	// Prints a message on console
-	fmt.Printf("Started Chaincode.")
+	fmt.Println("Started Chaincode.")
 
 	// Registers the chaincode with fabric runtime
 	err := shim.Start(new(TokenChaincode))

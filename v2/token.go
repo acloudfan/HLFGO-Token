@@ -9,6 +9,7 @@ import (
 
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+	
 	// peer.Response is in the peer package
     "github.com/hyperledger/fabric/protos/peer"
 
