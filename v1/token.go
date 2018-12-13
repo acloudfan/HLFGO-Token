@@ -1,25 +1,26 @@
 package main
+
 /**
  * v1\token
- * Shows the  
+ * Shows the
  *    A) implementation of the Chaincode interface
  *    B) use of Start function in main method
  *    C) use or Error | Success for Response creation
  **/
+
 import (
 	"fmt"
 
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	// peer.Response is in the peer package
-    "github.com/hyperledger/fabric/protos/peer"
 
+	// peer.Response is in the peer package
+	"github.com/hyperledger/fabric/protos/peer"
 )
 
 // TokenChaincode Represents our chaincode object
 type TokenChaincode struct {
 }
-
 
 // Init Implements the Init method
 func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
@@ -40,7 +41,11 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 
 // Chaincode registers with the Shim on startup
 func main() {
+	
+	// Prints a message on console
 	fmt.Printf("Started Chaincode.")
+
+	// Registers the chaincode with fabric runtime
 	err := shim.Start(new(TokenChaincode))
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)
