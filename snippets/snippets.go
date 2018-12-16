@@ -212,3 +212,7 @@ func conversions() {
 	// multiple Format??? functions
 	someStr = strconv.FormatInt(int64(i32), 10)
 }
+
+// JSON and G
+// https://blog.golang.org/json-and-go
+// JSON Tags https://godoc.org/encoding/json

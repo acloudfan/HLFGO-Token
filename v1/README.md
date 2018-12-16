@@ -8,19 +8,19 @@ Try out v1/token
 
 <<Terminal #1>>  
 
-- Setup the chaincode environment
-set-chain-env.sh   -n  token   -p token/v1    -i '{"Args": ["init"]}'  
-
 
 - Setup the organization context to acme
 . set-env.sh acme
+
+- Setup the chaincode environment
+set-chain-env.sh   -n  token   -p token/v1    -c '{"Args": ["init"]}'  
 
 #2
 
 <<Terminal #2>>
 
 - Start the chaincode 
-
+. set-env.sh acme
 cc-run.sh
 
 #3

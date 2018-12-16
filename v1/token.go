@@ -27,7 +27,7 @@ type TokenChaincode struct {
 func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 
 	// Simply print a message
-	fmt.Println("Init executed")
+	fmt.Println("Init executed in v1")
 
 	// Return success
 	return shim.Success(nil)
@@ -35,20 +35,30 @@ func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Respons
 
 // Invoke method
 func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	fmt.Println("Invoke executed ")
+	fmt.Println("Invoke executed in v1")
 
-	return shim.Success(nil)
+	payload := []byte("This is the payload.")
+	return shim.Success(payload)
+
+	// Below statement represents an error response as status != 200
+	// return peer.Response{Status:401, Message: "Unauthorized", Payload: payload}
+
 }
 
 // Chaincode registers with the Shim on startup
 func main() {
 
 	// Prints a message on console
-	fmt.Println("Started Chaincode.")
+	fmt.Println("Started Chaincode. token/v1")
 
 	// Registers the chaincode with fabric runtime
+
+
 	err := shim.Start(new(TokenChaincode))
+
+
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)
 	}
 }
+
