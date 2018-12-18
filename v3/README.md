@@ -9,3 +9,5 @@
 https://godoc.org/github.com/hyperledger/fabric/protos/peer
 - Common Proto Definitions
 https://godoc.org/github.com/hyperledger/fabric/protos/common
+- Proposal proto buffer definitions
+https://github.com/hyperledger/fabric/blob/release-1.4/protos/peer/proposal.proto

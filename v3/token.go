@@ -5,9 +5,6 @@ package main
  *    A) Transaction information
  *    B) Transaction timestamp
  *    C) Channel ID
- * https://github.com/hyperledger/fabric/blob/release-1.4/protos/peer/proposal.pb.go
- https://github.com/hyperledger/fabric/blob/release-1.4/protos/common/common.pb.go
- https://gowalker.org/github.com/hyperledger/fabric/protos/common#ChannelHeader
  **/
 import (
 	"fmt"
@@ -42,14 +39,14 @@ func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Respons
 func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	fmt.Println("Invoke executed ")
 
-	// V3
+	// V3   Print the transaction ID
 	fmt.Printf("GetTxID() => %s\n", stub.GetTxID())
 
-	// V3
+	// V3   Print the transaction Timestamp
 	TxTimestamp, _ := stub.GetTxTimestamp()
 	fmt.Printf("GetTxTimestamp() => %s\n", time.Unix(TxTimestamp.GetSeconds(),0))
 
-	// V3
+	// V3   Print the channel ID
 	fmt.Println("GetChannelID() =>", stub.GetChannelID())
 
 	// V3
@@ -58,42 +55,8 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	fmt.Println("GetTransient() =>", transientData)
 
 	// V3
-	
-	// fmt.Println("signedProposal.String() =>", signedProposal.String(),err)
-	
-	// fmt.Println("proposal.GetHeader()=>",string(proposal.GetHeader()))
-
-	// Read the header
-	// header:= &common.Header{}
-	// proto.Unmarshal(proposal.GetHeader(), header)
-	// fmt.Println("header=>", header)
-
-	// channelHeader:= &common.ChannelHeader{}
-	// fmt.Println("channelHeader=>", string(header.GetChannelHeader()))
-	// proto.Unmarshal(header.GetChannelHeader(), channelHeader)
-
-	// fmt.Println("proposal.GetHeader().channelHeader.GetType()=>", channelHeader.GetType())
-	// fmt.Println("proposal.GetHeader().channelHeader.GetChannelId=>", channelHeader.GetTxId())
-
-	// signatureHeader:= &common.SignatureHeader{}
-	// proto.Unmarshal(proposal.GetHeader(), signatureHeader)
-	// fmt.Println("signatureHeader=>", signatureHeader.Creator)
-	// fmt.Println("proposal.GetHeader().signatureHeader.GetChannelId=>", signatureHeader.GetTxId())
-
+	// Extract the information from proposal 
 	PrintSignedProposalInfo(stub)
-
-	// ext := proposal.GetExtension()
-	// fmt.Println("proposal.GetExtension()=>", ext)
-
-	// V3
-	// Requires use of Handler for decorators on the peer
-	// Refer: https://hyperledger-fabric.readthedocs.io/en/release-1.3/pluggable_endorsement_and_validation.html?highlight=handlers
-	// decorations := stub. GetDecorations()
-	// fmt.Println("GetDecorations() =>", decorations, err)
-
-	// V3
-	// binding, err := stub. GetBinding()
-	// fmt.Println("GetBinding() =>", string(binding), err)
 
 	return shim.Success(nil)
 }

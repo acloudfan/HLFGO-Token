@@ -59,8 +59,6 @@ type ChaincodeStubInterface interface {
 	GetSignedProposal() (*pb.SignedProposal, error)
 
 
-
-
 	// GetCreator returns `SignatureHeader.Creator` (e.g. an identity)
 	// of the `SignedProposal`. This is the identity of the agent (or user)
 	// submitting the transaction.
