@@ -9,10 +9,10 @@ import (
 
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+
 	// peer.Response is in the peer package
 	"github.com/hyperledger/fabric/protos/peer"
-	// Used for formatting the timestamp
-	"time"
+
 )
 
 // TokenChaincode Represents our chaincode object
@@ -32,38 +32,42 @@ func (token *TokenChaincode) Init(stub shim.ChaincodeStubInterface) peer.Respons
 
 // Invoke method
 func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	TxTimestamp, _ := stub.GetTxTimestamp()
-	fmt.Printf("Invoke executed TxID=%s   TxTimestamp=%s\n", stub.GetTxID(), time.Unix(TxTimestamp.GetSeconds(),0))
+
+	fmt.Println("============Invoke Executed============")
 
 	// V4
 	// Get the args in a 2D array of byte
 	argsArray := stub.GetArgs()
+	fmt.Println("============GetArgs()")
 	for ndx, arg := range argsArray {
-		fmt.Printf("[%d]=%s  ", ndx, string(arg))
+		// Convert the byte[] to string
+		argStr := string(arg)
+		fmt.Printf("[%d]=%s  \n", ndx, argStr
 	}
-	fmt.Println()
 
 	// V4
 	// Get the Args[] sent by the client
+	fmt.Println("==========GetStringArgs()")
 	fmt.Println(stub.GetStringArgs())
 	
-
-	// V4
-	argsSlice,_ := stub.GetArgsSlice()
-	fmt.Println(string(argsSlice))
-
-
 	// V4
 	// Get the function & parameters
+	fmt.Println("=========GetFunctionAndParameters()")
 	funcName, args := stub.GetFunctionAndParameters()
 	fmt.Printf("Function=%s  Args=%s\n", funcName, args)
+
+	// V4
+	fmt.Println("==============GetArgsSlice()")
+	argsSlice,_ := stub.GetArgsSlice()
+	length := len(argsSlice)
+	fmt.Println(length, argsSlice)
 
 	return shim.Success(nil)
 }
 
 // Chaincode registers with the Shim on startup
 func main() {
-	fmt.Printf("Started Chaincode.")
+	fmt.Println("Started Chaincode. token/v4")
 	err := shim.Start(new(TokenChaincode))
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)

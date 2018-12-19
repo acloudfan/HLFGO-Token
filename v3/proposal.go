@@ -19,6 +19,8 @@ import (
 // PrintSignedProposalInfo prints the info to console
 func	PrintSignedProposalInfo(stub shim.ChaincodeStubInterface) {
 
+	fmt.Println("PrintSignedProposalInfo() executed ")
+
 	// Get the SignedProposal
 	// SignedProposal has 2 parts
 	// 1. ProposalBytes
@@ -27,15 +29,6 @@ func	PrintSignedProposalInfo(stub shim.ChaincodeStubInterface) {
 	data := signedProposal.GetProposalBytes()
 	proposal := &peer.Proposal{}
 	proto.Unmarshal(data, proposal)
-
-	// 1.
-	chaincodeProposalPayload := &peer.ChaincodeProposalPayload{}
-	proto.Unmarshal(data, chaincodeProposalPayload)
-	chaincodeInvocationSpec := &peer.ChaincodeInvocationSpec{}
-	proto.Unmarshal(chaincodeProposalPayload.GetInput(), chaincodeInvocationSpec)
-
-	fmt.Println("ChaincodeProposlPayload.GetInput()=", chaincodeInvocationSpec)
-
 
 	// Proposal has 2 parts
 	// 1. Header
@@ -48,6 +41,7 @@ func	PrintSignedProposalInfo(stub shim.ChaincodeStubInterface) {
 	// 2. SignatureHeader
 	channelHeader:= &common.ChannelHeader{}
 	proto.Unmarshal(header.GetChannelHeader(), channelHeader)
-	fmt.Printf("channelHeader.GetType() = %s\n channelHeader.GetChannelId() = %s\n", common.HeaderType(channelHeader.GetType()), channelHeader.GetChannelId())
+	fmt.Println("channelHeader.GetType() => ", common.HeaderType(channelHeader.GetType()))
+	fmt.Println("channelHeader.GetChannelId() => ", channelHeader.GetChannelId())
 }
 

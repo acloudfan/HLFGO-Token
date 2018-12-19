@@ -42,28 +42,33 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	// V3   Print the transaction ID
 	fmt.Printf("GetTxID() => %s\n", stub.GetTxID())
 
-	// V3   Print the transaction Timestamp
-	TxTimestamp, _ := stub.GetTxTimestamp()
-	fmt.Printf("GetTxTimestamp() => %s\n", time.Unix(TxTimestamp.GetSeconds(),0))
 
 	// V3   Print the channel ID
 	fmt.Println("GetChannelID() =>", stub.GetChannelID())
 
-	// V3
-	// Will receieve empty map unless client set the transient data in Tx Proposal
-	transientData, _ := stub.GetTransient()
-	fmt.Println("GetTransient() =>", transientData)
+	// V3   Print the transaction Timestamp
+	TxTimestamp, _ := stub.GetTxTimestamp()
+	timeStr := time.Unix(TxTimestamp.GetSeconds(),0)
+	fmt.Printf("GetTxTimestamp() => %s\n", timeStr)
 
+	
 	// V3
 	// Extract the information from proposal 
 	PrintSignedProposalInfo(stub)
+
+	// V3
+	// Will receieve empty map unless client set the transient data in Tx Proposal
+	// transientData, _ := stub.GetTransient()
+	// fmt.Println("GetTransient() =>", transientData)
+
+
 
 	return shim.Success(nil)
 }
 
 // Chaincode registers with the Shim on startup
 func main() {
-	fmt.Printf("Started Chaincode.")
+	fmt.Println("Started Chaincode. token/v3")
 	err := shim.Start(new(TokenChaincode))
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)
