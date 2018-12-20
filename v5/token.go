@@ -76,7 +76,7 @@ func SetToken(stub shim.ChaincodeStubInterface) peer.Response{
 
 	// If there is error in retrieve send back an error response
 	if(err != nil){
-		return  shim.Error("Error in getting MyToken!!!", err)
+		return  shim.Error(err.Error())
 	}
 
 	// Convert value to integer
@@ -101,9 +101,14 @@ func SetToken(stub shim.ChaincodeStubInterface) peer.Response{
 // V5
 // Reurns the value or -1 in case MyToken doesn't exist
 func  GetToken(stub shim.ChaincodeStubInterface) peer.Response {
+	// Holds a string for the response
 	var myToken string
 
-	if value, err := stub.GetState("MyToken"); err != nil {
+	// Local variables for value & error
+	var value  []byte
+	var err    error
+	
+	if value, err = stub.GetState("MyToken"); err != nil {
 
 		fmt.Println("Get Failed!!! ", err.Error())
 
