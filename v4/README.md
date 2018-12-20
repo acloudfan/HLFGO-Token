@@ -16,9 +16,16 @@ chain.sh   install
 set-chain-env.sh   -c   '{"Args":["init"]}'
 chain.sh   instantiate
 
+# Empty array is fine
+# "args" instead of "Args" is fine too
+set-chain-env.sh -i '{"args":[]}'
+chain.sh   invoke
+
+# 1
 set-chain-env.sh   -i    '{"args":["func-name"]}'
 chain.sh   invoke
 
+# 2
 set-chain-env.sh   -i    '{"args":["func-name","param-1","param-2"]}'
 chain.sh   invoke
 

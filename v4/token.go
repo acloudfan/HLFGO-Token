@@ -2,7 +2,7 @@ package main
 /**
  * tokenv4
  * Shows the use of ChaincodeStub API for getting the arguments sent from client
- * set-chain-env.sh -q '{"Args":["FunctionName","Arg-1", "Arg-2"]}'
+ * set-chain-env.sh -i '{"Args":["FunctionName","Arg-1", "Arg-2"]}'
  **/
 import (
 	"fmt"
@@ -42,7 +42,7 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	for ndx, arg := range argsArray {
 		// Convert the byte[] to string
 		argStr := string(arg)
-		fmt.Printf("[%d]=%s  \n", ndx, argStr
+		fmt.Printf("[%d]=%s  \n", ndx, argStr)
 	}
 
 	// V4

@@ -11,7 +11,7 @@ import (
 	// peer.Response is in the peer package
 	"github.com/hyperledger/fabric/protos/peer"
 
-	// Conversion functions
+	// Conversion functions - needed to convert MyToken to Integer
 	"strconv"
 )
 
@@ -50,35 +50,48 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 		// Gets the value
 		return GetToken(stub)
 
-	} else if(funcName == "delete"){
+	} 
+	
+	// Solution to the exercise
+	/***
+	   else if(funcName == "delete"){
 
 		
 		// Delete the token
 		return DeleteToken(stub)
-	}  
+	}  ***/
 	
 	// This is not good
 	return shim.Error(("Bad Function Name = "+funcName+"!!!"))
 }
 
 
-// SetToken sets the value of the token
+// SetToken inrements the value of the token by 10
 // V5
 // Returns true if successful
 func SetToken(stub shim.ChaincodeStubInterface) peer.Response{
+	
+	// Get the current value
 	value, err := stub.GetState("MyToken")
+
+	// If there is error in retrieve send back an error response
 	if(err != nil){
-		fmt.Println("MyToken Not found!!!")
-		return  shim.Error("Token not found in State Database!!!")
+		return  shim.Error("Error in getting MyToken!!!", err)
 	}
-	// Otherwise increment the value by 10
+
+	// Convert value to integer
 	intValue, err :=  strconv.Atoi(string(value))
 
+	// If there is an error in conversion - return false
 	if err != nil {
 		// May also return sh.Error 
 		return shim.Success([]byte("false"))
 	}
+
+	// Increment the value by 10
 	intValue += 10
+
+	// Execute PutState - overwrites the current value
 	stub.PutState("MyToken", []byte(strconv.Itoa(intValue)))
 
 	return shim.Success([]byte("true"))
@@ -91,42 +104,33 @@ func  GetToken(stub shim.ChaincodeStubInterface) peer.Response {
 	var myToken string
 
 	if value, err := stub.GetState("MyToken"); err != nil {
+
 		fmt.Println("Get Failed!!! ", err.Error())
+
 		return shim.Error(("Get Failed!! "+err.Error()+"!!!"))
+
+	} 
+
+	// nil indicates non existent key
+	if (value == nil) {
+		// Return value -1 is to indicate to caller that MyToken
+		// Does NOT exist in state data
+		myToken = "-1"
+
 	} else {
-		// nil indicates non existent key
-		if (value == nil) {
-			myToken = "-1"
-		} else {
-			myToken = string(value)
-		}
+
+		myToken = "MyToken="+string(value)
+
 	}
 	
 	return shim.Success([]byte(myToken))
 }
 
-// DeleteToken deletes the token from the database
-// V5
-// Returns 0 if successful
-func  DeleteToken(stub shim.ChaincodeStubInterface) peer.Response {
 
-	// Check if the key exists - if not then return false
-	value, _ := stub.GetState("MyToken")
-	if value == nil {
-		return shim.Success([]byte("false"))
-	}
-	// Delete the key
-	if err := stub.DelState("MyToken"); err != nil {
-		fmt.Println("Delete Failed!!! ", err.Error())
-		return shim.Error(("Delete Failed!! "+err.Error()+"!!!"))
-	}
-
-	return shim.Success([]byte("true"))
-}
 
 // Chaincode registers with the Shim on startup
 func main() {
-	fmt.Printf("Started Chaincode.\n")
+	fmt.Printf("Started Chaincode. token/v5\n")
 	err := shim.Start(new(TokenChaincode))
 	if err != nil {
 		fmt.Printf("Error starting chaincode: %s", err)

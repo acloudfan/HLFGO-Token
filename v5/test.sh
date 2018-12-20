@@ -2,7 +2,7 @@
 
 # Unit Testing for v5/token
 # Assumes that chaincode is installed & instantiated outside of this script
-# OK to use it in dev & net mode
+# Uses the DelState function - so test will fail for the original implementation
 
 # Include the unit test driver
 source  utest.sh
@@ -27,7 +27,7 @@ set_org_context  acme
 chain_install 
 
 # Instantiate
-CC_CONSTRUCTOR='{"Args":["init","ACFT","1000", "A Cloud Fan Token!!!","raj"]}'
+CC_CONSTRUCTOR='{"Args":[]}'
 chain_instantiate
 ############################### Test Case#1 #######################################
 set_test_case   'Chaincode Should return a value > 0'
