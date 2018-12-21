@@ -15,8 +15,21 @@ To Test execute invoke/query .... everytime invoke is called value will incremen
 10. Execute query                   chain.sh  query
 
 
+Solution to exercise
+====================
+1. Solution is in the deltate.go
+2. Add the following to the invoke function
+	// Solution to the exercise
+	   else if(funcName == "delete"){
+
+
+		// Delete the token
+		return DeleteToken(stub)
+	}  
+
+Solution exercise testing
+=========================
 # Using the test.sh file
-# Steps to be followed only after the 'Token delete func added'
 The test may be run net & dev mode. 
 Prior to running the test install & instantiate the chaincode
 1. Launch the setup in net mode

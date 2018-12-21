@@ -52,14 +52,6 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 
 	} 
 	
-	// Solution to the exercise
-	/***
-	   else if(funcName == "delete"){
-
-		
-		// Delete the token
-		return DeleteToken(stub)
-	}  ***/
 	
 	// This is not good
 	return shim.Error(("Bad Function Name = "+funcName+"!!!"))

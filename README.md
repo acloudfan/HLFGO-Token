@@ -37,13 +37,16 @@ Shows the use of GetState | PutState | DelState
 > set-chain-env.sh -i '{"Args":["delete"]}'
 
 {v6}
-Solution to the exercise. Create a new function - call it AddState
+Shows the use of InvokeFunction
 
 {v7}
+Solution to the exercise. Create a new function - call it AddState
+
+{v8}
 Multiple tokens - functions will apply to the token - so pass an additional parameter
 Solution to the exercise
 
-
+{v9}
 
 
 
