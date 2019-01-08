@@ -1,0 +1,73 @@
+package main;
+
+import (
+	"fmt"
+
+	// The shim package
+	"github.com/hyperledger/fabric/core/chaincode/shim"
+	// peer.Response is in the peer package
+	"github.com/hyperledger/fabric/protos/peer"
+)
+
+// TokenChaincode Represents our chaincode object
+type PrivChaincode struct {
+}
+
+// Init Implements the Init method
+func (token *PrivChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
+
+	// Simply print a message
+	fmt.Println("Init executed")
+
+	// PublicToken
+	//stub.PutState("PublicToken", []byte("Open to all"))
+	// err1 := stub.PutPrivateData("airlineOpen", "PublicToken", []byte("Open to all"))
+	// if err1 != nil {
+	// 	return shim.Error("Error1="+err1.Error())
+	// }
+
+	// AcmeBudgetOnlyToken i.e., Expo cannot see it
+	// err2 := stub.PutPrivateData("acmePrivCollection","PrivateToken", []byte("Secret shared by Acme & Budget"))
+	// if err2 != nil {
+	// 	return shim.Error("Error2="+err2.Error())
+	// }
+
+	// Return success
+	return shim.Success([]byte("true"))
+}
+
+// Invoke method
+func (token *PrivChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
+
+	err1 := stub.PutPrivateData("airlineOpen", "PublicToken", []byte("Open to all"))
+	if err1 != nil {
+		return shim.Error("Error1="+err1.Error())
+	}
+	err2 := stub.PutPrivateData("acmePrivCollection","PrivateToken", []byte("Secret shared by Acme & Budget"))
+	if err2 != nil {
+		return shim.Error("Error2="+err2.Error())
+	}
+
+	dataOpen, err := stub.GetPrivateData("airlineOpen", "PublicToken")
+	if err != nil {
+		return shim.Error("Error3="+err.Error())
+	}
+	dataSecret, err1 := stub.GetPrivateData("acmePrivCollection", "PrivateToken")
+
+	if err1 != nil {
+		//return shim.Error("Error="+err1.Error())
+		dataSecret=[]byte("*******")
+	}
+
+	// This is not good
+	return shim.Success([]byte("dataOpen = "+string(dataOpen)+"   dataSecret = "+string(dataSecret)))
+}
+
+// Chaincode registers with the Shim on startup
+func main() {
+	fmt.Printf("Started Chaincode. priv\n")
+	err := shim.Start(new(PrivChaincode))
+	if err != nil {
+		fmt.Printf("Error starting chaincode: %s", err)
+	}
+}

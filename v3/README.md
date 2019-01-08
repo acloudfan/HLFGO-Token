@@ -11,3 +11,6 @@ https://godoc.org/github.com/hyperledger/fabric/protos/peer
 https://godoc.org/github.com/hyperledger/fabric/protos/common
 - Proposal proto buffer definitions
 https://github.com/hyperledger/fabric/blob/release-1.4/protos/peer/proposal.proto
+
+
+go get -u github.com/golang/protobuf/protoc-gen-go

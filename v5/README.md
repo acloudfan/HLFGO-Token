@@ -17,7 +17,7 @@ To Test execute invoke/query .... everytime invoke is called value will incremen
 
 Solution to exercise
 ====================
-1. Solution is in the deltate.go
+1. Solution is in the delstate.go
 2. Add the following to the invoke function
 	// Solution to the exercise
 	   else if(funcName == "delete"){

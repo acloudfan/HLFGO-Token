@@ -40,7 +40,8 @@ Shows the use of GetState | PutState | DelState
 Shows the use of InvokeFunction
 
 {v7}
-Solution to the exercise. Create a new function - call it AddState
+#Not needed-Solution to the exercise. Create a new function - call it AddState
+Solution for v7 - management of multiple tokens
 
 {v8}
 Multiple tokens - functions will apply to the token - so pass an additional parameter

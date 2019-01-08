@@ -45,3 +45,11 @@ func	PrintSignedProposalInfo(stub shim.ChaincodeStubInterface) {
 	fmt.Println("channelHeader.GetChannelId() => ", channelHeader.GetChannelId())
 }
 
+// Prints the creator information
+func  PrintCreatorInfo(stub shim.ChaincodeStubInterface) {
+	fmt.Println("PrintCreatorInfo() executed ")
+
+	byteData, _ := stub.GetCreator()
+
+	fmt.Println("PrintCreatorInfo => ",string(byteData))
+}

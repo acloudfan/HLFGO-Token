@@ -205,7 +205,21 @@ type ChaincodeStubInterface interface {
 	GetStateByPartialCompositeKeyWithPagination(objectType string, keys []string,
 		pageSize int32, bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)
 
-
+	/*** History ***/
+	
+	// GetHistoryForKey returns a history of key values across time.
+	// For each historic key update, the historic value and associated
+	// transaction id and timestamp are returned. The timestamp is the
+	// timestamp provided by the client in the proposal header.
+	// GetHistoryForKey requires peer configuration
+	// core.ledger.history.enableHistoryDatabase to be true.
+	// The query is NOT re-executed during validation phase, phantom reads are
+	// not detected. That is, other committed transactions may have updated
+	// the key concurrently, impacting the result set, and this would not be
+	// detected at validation/commit time. Applications susceptible to this
+	// should therefore not use GetHistoryForKey as part of transactions that
+	// update ledger, and should limit use to read-only chaincode operations.
+	GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)
 
 	/***** COMPOSITE & QUERIES Keys *****/
 
@@ -256,19 +270,7 @@ type ChaincodeStubInterface interface {
 	GetQueryResultWithPagination(query string, pageSize int32,
 		bookmark string) (StateQueryIteratorInterface, *pb.QueryResponseMetadata, error)
 
-	// GetHistoryForKey returns a history of key values across time.
-	// For each historic key update, the historic value and associated
-	// transaction id and timestamp are returned. The timestamp is the
-	// timestamp provided by the client in the proposal header.
-	// GetHistoryForKey requires peer configuration
-	// core.ledger.history.enableHistoryDatabase to be true.
-	// The query is NOT re-executed during validation phase, phantom reads are
-	// not detected. That is, other committed transactions may have updated
-	// the key concurrently, impacting the result set, and this would not be
-	// detected at validation/commit time. Applications susceptible to this
-	// should therefore not use GetHistoryForKey as part of transactions that
-	// update ledger, and should limit use to read-only chaincode operations.
-	GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)
+
 
 
 	/***** PRIVATE DATA *****/

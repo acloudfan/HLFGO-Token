@@ -42,7 +42,6 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	// V3   Print the transaction ID
 	fmt.Printf("GetTxID() => %s\n", stub.GetTxID())
 
-
 	// V3   Print the channel ID
 	fmt.Println("GetChannelID() =>", stub.GetChannelID())
 
@@ -61,7 +60,7 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	// transientData, _ := stub.GetTransient()
 	// fmt.Println("GetTransient() =>", transientData)
 
-
+	PrintCreatorInfo(stub)
 
 	return shim.Success(nil)
 }
