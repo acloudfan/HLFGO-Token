@@ -11,9 +11,15 @@ Testing
 =======
 + Launch the env - either mode fine
 + Install & Instantiate
+    set-chain-env.sh -p token/v8
+    chain.sh install
+    chain.sh instantiate
 + If in dev mode then run the CC
-+ Launch the event listener chain events
-+ Execute invoke/set on chaincode
++ <Terminal#1> Launch the event listener chain events
+    events.sh -t chaincode -n token -e TokenValueChanged -c airlinechannel 
++ <Terminal#2> Execute invoke/set on chaincode
+    set-chain-env.sh   -i   '{"args":["set"]}' -q   '{"args":["get"]}'
+    chain.sh invoke
 + Observe events on the tool everytime set is invoked
 
 

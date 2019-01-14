@@ -44,7 +44,7 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	logger.Debug("DEBUG=Invoke executed v2")
 	logger.Info("INFO=Invoke executed v2")
 	logger.Noticef("NOTICE format string Value=%s", "Invoke executed v2")
-	logger.Warning("WARNING=Invoke executed v2", " [any number of parameters of different types]",123)
+	logger.Warning("WARNING=Invoke executed v2", " [any number of parameters]",123)
 
 	return shim.Success(nil)
 }
