@@ -42,3 +42,11 @@ Check the balance for 'john' & 'sam'
 > chain.sh query
 > set-chain-env.sh         -q   '{"Args":["balanceOf","sam"]}'
 > chain.sh query
+
+Events Testing
+==============
+Launch the events utility
+> events.sh -t chaincode -n erc20 -e transfer -c airlinechannel 
+
+In a second terminal execute the invoke - observe transfer events in terminal 1
+> chain.sh invoke

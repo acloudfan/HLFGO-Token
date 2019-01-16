@@ -11,7 +11,8 @@ Testing
 =======
 + Launch the env - either mode fine
 + Install & Instantiate
-    set-chain-env.sh -p token/v8
+    . set-env.sh   acme
+    set-chain-env.sh  -n token -v 1.0 -p token/v8 -c '{"Args": ["init"]}'
     chain.sh install
     chain.sh instantiate
 + If in dev mode then run the CC

@@ -1,7 +1,7 @@
 package main
 /**
- * tokenv5
- * Shows the use of ChaincodeStub API for getting & setting key/value pairs
+ * token v8
+ * Shows the use of ChaincodeStub API for emitting events
  **/
 import (
 	"fmt"
@@ -40,7 +40,7 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	fmt.Println("Function=", funcName)
 
 
-	// V5
+	// V8
 	if(funcName == "set"){
 		// Sets the value
 		return SetToken(stub)
@@ -59,7 +59,7 @@ func (token *TokenChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 
 
 // SetToken inrements the value of the token by 10
-// V5
+// V8
 // Returns true if successful
 func SetToken(stub shim.ChaincodeStubInterface) peer.Response{
 	

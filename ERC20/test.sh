@@ -5,6 +5,7 @@ source  utest.sh
 # Include the Chaincode environment properties
 source cc.env.sh
 # Override the CC properties
+# CC_PATH=exercise/ERC20
 CC_PATH=token/ERC20
 CC_NAME=erc20
 CC_VERSION=2.0
