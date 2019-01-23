@@ -36,6 +36,8 @@ Shows the use of GetState | PutState | DelState
 > set-chain-env.sh -i '{"Args":["set"]}'
 > set-chain-env.sh -i '{"Args":["delete"]}'
 
+Shows the use of EP
+
 {v6}
 Shows the use of InvokeFunction
 
@@ -44,8 +46,7 @@ Shows the use of InvokeFunction
 Solution for v7 - management of multiple tokens
 
 {v8}
-Multiple tokens - functions will apply to the token - so pass an additional parameter
-Solution to the exercise
+Shows the use of events
 
 {v9}
 

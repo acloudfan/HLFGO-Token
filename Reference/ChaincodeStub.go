@@ -129,6 +129,8 @@ type ChaincodeStubInterface interface {
 	// the ledger when the transaction is validated and successfully committed.
 	DelState(key string) error
 
+	/** Key Endorsement Policy**/
+
 	// SetStateValidationParameter sets the key-level endorsement policy for `key`.
 	SetStateValidationParameter(key string, ep []byte) error
 
@@ -137,6 +139,7 @@ type ChaincodeStubInterface interface {
 	// the transaction's readset.
 	GetStateValidationParameter(key string) ([]byte, error)
 
+	
 	// GetStateByRange returns a range iterator over a set of keys in the
 	// ledger. The iterator can be used to iterate over all keys
 	// between the startKey (inclusive) and endKey (exclusive).
