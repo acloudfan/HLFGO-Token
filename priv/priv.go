@@ -1,15 +1,19 @@
-package main;
+package main
 
+/**
+ * Demonstrates the use of Private Data Collections
+ **/
 import (
 	"fmt"
 
 	// The shim package
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+
 	// peer.Response is in the peer package
 	"github.com/hyperledger/fabric/protos/peer"
 )
 
-// TokenChaincode Represents our chaincode object
+// PrivChaincode Represents our chaincode object
 type PrivChaincode struct {
 }
 
@@ -32,17 +36,16 @@ func (privCode *PrivChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Res
 	fmt.Printf("funcName=%s  Params=%s \n", funcName, params)
 
 	if funcName == "Set" {
-		
+
 		return privCode.Set(stub, params)
 
 	} else if funcName == "Get" {
-		
+
 		return privCode.Get(stub)
 
 	}
 
-	
-	return shim.Error("Invalid Function Name: "+funcName)
+	return shim.Error("Invalid Function Name: " + funcName)
 }
 
 // Set function
@@ -52,9 +55,9 @@ func (privCode *PrivChaincode) Set(stub shim.ChaincodeStubInterface, params []st
 	// params[0]=Collection name
 	// params[1]=Value for the token
 
-	err1 := stub.PutPrivateData(params[0], "token", []byte(params[1]))
-	if err1 != nil {
-		return shim.Error("Error1="+err1.Error())
+	err := stub.PutPrivateData(params[0], "token", []byte(params[1]))
+	if err != nil {
+		return shim.Error("Error=" + err.Error())
 	}
 
 	return shim.Success([]byte("true"))
@@ -67,21 +70,25 @@ func (privCode *PrivChaincode) Get(stub shim.ChaincodeStubInterface) peer.Respon
 	resultString := "{}"
 
 	// Read the open data
-	dataOpen, err := stub.GetPrivateData("airlineOpen", "token")
-	if err != nil {
-		return shim.Error("Error1="+err.Error())
+	dataOpen, err1 := stub.GetPrivateData("AirlineOpen", "token")
+	if err1 != nil {
+		return shim.Error("Error1=" + err1.Error())
 	}
 
 	// Read the acme private data
-	dataSecret, err1 := stub.GetPrivateData("acmePrivCollection", "token")
+	dataSecret, err2 := stub.GetPrivateData("AcmePrivate", "token")
 
-	if err1 != nil {
+	accessError := "N.A."
+	if err2 != nil {
 		//return shim.Error("Error="+err1.Error())
-		fmt.Println("Error2="+err1.Error())
-		dataSecret=[]byte("**** Not Allowed ***")
+		fmt.Println("Error2=" + err2.Error())
+		accessError = err2.Error()
+		dataSecret = []byte("**** Not Allowed ***")
 	}
 
-	resultString = "{open:\""+string(dataOpen)+"\", secret:\""+string(dataSecret)+"\"}"
+	// resultString = "{open:\""+string(dataOpen)+"\", secret:\""+string(dataSecret)+"\"}"
+	// resultString = "{\"open\":\""+string(dataOpen)+"\", \"secret\":\""+string(dataSecret)+"\",\"error\":\""+err2.Error()+  "\"}"
+	resultString = "{open:\"" + string(dataOpen) + "\", secret:\"" + string(dataSecret) + "\" , error:\"" + accessError + "\"}"
 
 	return shim.Success([]byte(resultString))
 }

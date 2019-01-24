@@ -1,15 +1,15 @@
 [
   {
-    "name": "airlineOpen",
+    "name": "AirlineOpen",
     "policy": "OR('AcmeMSP.member', 'BudgetMSP.member')",
-    "requiredPeerCount": 0,
+    "requiredPeerCount": 1,
     "maxPeerCount": 3,
     "blockToLive": 0
   },
   {
-    "name": "acmePrivCollection",
+    "name": "AcmePrivCollection",
     "policy": "OR('AcmeMSP.member')",
-    "requiredPeerCount": 0,
+    "requiredPeerCount": 1,
     "maxPeerCount": 3,
     "blockToLive": 0
   }
