@@ -7,7 +7,7 @@
     "blockToLive": 0
   },
   {
-    "name": "AcmePrivCollection",
+    "name": "AcmePrivate",
     "policy": "OR('AcmeMSP.member')",
     "requiredPeerCount": 1,
     "maxPeerCount": 3,
