@@ -20,9 +20,9 @@ set-chain-env.sh -R pcollection.json
 chain.sh install
 chain.sh instantiate-priv
 # Invoke to set the value for 2 tokens
-set-chain-env.sh -i '{"Args": ["Set","airlineOpen", "Acme has set the OPEN data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Acme has set the OPEN data"]}'
 chain.sh invoke
-set-chain-env.sh -i '{"Args": ["Set","acmePrivCollection", "Acme has set the SECRET data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Acme has set the SECRET data"]}'
 chain.sh invoke
 # Get the value for 2 tokens
 set-chain-env.sh -q '{"Args": ["Get"]}'
@@ -36,10 +36,10 @@ chain.sh install
 # Get the value for 2 tokens
 chain.sh query         
 
-set-chain-env.sh -i '{"Args": ["Set","airlineOpen", "Budget has set the OPEN data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Budget has set the OPEN data"]}'
 chain.sh invoke
 
-set-chain-env.sh -i '{"Args": ["Set","acmePrivCollection", "Budget has set the SECRET data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Budget has set the SECRET data"]}'
 chain.sh invoke
 
 # Get the value for 2 tokens - Budget will NOT seet the value for protected token
@@ -94,9 +94,9 @@ Invalid collection name will lead to error
 
 1. Acme can set both the public & private data
 . set-env.sh acme
-set-chain-env.sh -i '{"Args": ["Set","airlineOpen", "Acme has set the OPEN data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Acme has set the OPEN data"]}'
 chain.sh invoke
-set-chain-env.sh -i '{"Args": ["Set","acmePrivCollection", "Acme has set the SECRET data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Acme has set the SECRET data"]}'
 chain.sh invoke
 
 2. Acme can get both public and secret data
@@ -108,10 +108,10 @@ chain.sh query
 . set-env.sh budget
 
 # Change the parameters for invoke
-set-chain-env.sh -i '{"Args": ["Set","airlineOpen", "Budget has set the OPEN data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Budget has set the OPEN data"]}'
 chain.sh invoke
 
-set-chain-env.sh -i '{"Args": ["Set","acmePrivCollection", "Budget has set the SECRET data"]}'
+set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Budget has set the SECRET data"]}'
 chain.sh invoke
 
 4. Budget can get only the public data

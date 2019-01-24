@@ -1,6 +1,6 @@
 [
   {
-    "name": "AirlineOpen",
+    "name": "AcmeBudgetOpen",
     "policy": "OR('AcmeMSP.member', 'BudgetMSP.member')",
     "requiredPeerCount": 1,
     "maxPeerCount": 3,

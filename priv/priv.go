@@ -70,7 +70,7 @@ func (privCode *PrivChaincode) Get(stub shim.ChaincodeStubInterface) peer.Respon
 	resultString := "{}"
 
 	// Read the open data
-	dataOpen, err1 := stub.GetPrivateData("AirlineOpen", "token")
+	dataOpen, err1 := stub.GetPrivateData("AcmeBudgetOpen", "token")
 	if err1 != nil {
 		return shim.Error("Error1=" + err1.Error())
 	}
