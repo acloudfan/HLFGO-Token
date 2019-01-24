@@ -35,15 +35,22 @@ reset-chain-env.sh
 set-chain-env.sh  -n priv -v 1.0 -p token/priv -c '{"Args": ["init"]}' -C airlinechannel
 # Use the -R option to set the PDC
 # At instantiation chain.sh will specify the full path to PDC collection
-set-chain-env.sh -R pcollection.json
+set-chain-env.sh -R pcollection.0.json
+
+Install & Instantiate
+. set-env.sh acme
+chain.sh install
+chain.sh instantiate
+
+. set-env.sh budget
+chain.sh install
 
 2. Invoke the Set as ACME & Query
 
 <Terminal#1>
-. set-env.sh acme
-chain.sh install
-chain.sh instantiate-priv
+
 # Invoke to set the value for 2 tokens
+. set-env.sh acme
 set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Acme has set the OPEN data"]}'
 chain.sh invoke
 set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Acme has set the SECRET data"]}'
@@ -56,9 +63,6 @@ chain.sh query
 
 <Terminal#2>
 . set-env.sh budget
-chain.sh install
-# Get the value for 2 tokens
-chain.sh query         
 
 set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Budget has set the OPEN data"]}'
 chain.sh invoke
@@ -71,8 +75,10 @@ chain.sh query
 
 4. Query as ACME
 <Terminal#1>
+. set-env.sh acme
 chain.sh query  
 
+. set-env.sh acme
 
 Testing in Dev Mode
 ====================

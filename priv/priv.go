@@ -57,7 +57,10 @@ func (privCode *PrivChaincode) Set(stub shim.ChaincodeStubInterface, params []st
 	// params[0]=Collection name
 	// params[1]=Value for the token
 
-	err := stub.PutPrivateData(params[0], "token", []byte(params[1]))
+	CollectionName := params[0]
+	TokenValue := params[1]
+
+	err := stub.PutPrivateData(CollectionName, "token", []byte(TokenValue))
 	if err != nil {
 		return shim.Error("Error=" + err.Error())
 	}
