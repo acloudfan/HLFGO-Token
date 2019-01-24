@@ -1,6 +1,30 @@
 # Private data
 https://hyperledger-fabric.readthedocs.io/en/release-1.3/private_data_tutorial.html
 
+
+Install & Instantiate
+=====================
+dev-init.sh -e
+
+. set-env.sh acme
+
+reset-chain-env.sh
+set-chain-env.sh  -n priv -v 1.0 -p token/priv -c '{"Args": ["init"]}' -C airlinechannel
+set-chain-env.sh -R pcollection.json
+
+Exercise
+=========
+Install & Instantiate the token/priv chaincode using "peer chaincode instantiate .." command
+
+<Solution>
+Setup the environment variables
+chain.sh install
+. cc.env.sh
+peer chaincode instantiate -C "$CC_CHANNEL_ID" -n "$CC_NAME"  -v "$CC_VERSION" -c "$CC_CONSTRUCTOR" -o "$ORDERER_ADDRESS"  --collections-config "$GOPATH/src/token/priv/pcollection.json"
+
+
+Test the setup
+==============
 1. Start the Environment
 
 # Start the environment in net mode

@@ -2,6 +2,8 @@ package main
 
 /**
  * Demonstrates the use of Private Data Collections
+ * Path:   token/priv
+ * Requires the creation of the PDC definition using the pcollection.json 
  **/
 import (
 	"fmt"
@@ -51,7 +53,7 @@ func (privCode *PrivChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Res
 // Set function
 func (privCode *PrivChaincode) Set(stub shim.ChaincodeStubInterface, params []string) peer.Response {
 
-	// Minimum of 2 args is needed - skipping the check
+	// Minimum of 2 args is needed - skipping the check for clarity
 	// params[0]=Collection name
 	// params[1]=Value for the token
 
@@ -63,7 +65,7 @@ func (privCode *PrivChaincode) Set(stub shim.ChaincodeStubInterface, params []st
 	return shim.Success([]byte("true"))
 }
 
-// Gets the value of "token" from both the collections
+// Get gets the value of token from both collections
 func (privCode *PrivChaincode) Get(stub shim.ChaincodeStubInterface) peer.Response {
 
 	// This is returned
@@ -86,8 +88,7 @@ func (privCode *PrivChaincode) Get(stub shim.ChaincodeStubInterface) peer.Respon
 		dataSecret = []byte("**** Not Allowed ***")
 	}
 
-	// resultString = "{open:\""+string(dataOpen)+"\", secret:\""+string(dataSecret)+"\"}"
-	// resultString = "{\"open\":\""+string(dataOpen)+"\", \"secret\":\""+string(dataSecret)+"\",\"error\":\""+err2.Error()+  "\"}"
+	// Returns the token value from 2 PDC + error in retrieving from AcmePrivate collection
 	resultString = "{open:\"" + string(dataOpen) + "\", secret:\"" + string(dataSecret) + "\" , error:\"" + accessError + "\"}"
 
 	return shim.Success([]byte(resultString))
