@@ -80,6 +80,15 @@ chain.sh query
 
 . set-env.sh acme
 
+Exercise
+========
+Extend the priv chaincode - add a function to delete the key in specific collection
+
+set-chain-env.sh -i '{"Args": ["Del", "AcmePrivate"]}'
+chain.sh invoke
+
+
+
 Testing in Dev Mode
 ====================
 Use the instructions below to test the PDC in in DEV mode

@@ -45,6 +45,9 @@ func (privCode *PrivChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Res
 
 		return privCode.Get(stub)
 
+	} else if funcName == "Del" {
+
+		return privCode.Del(stub, params)
 	}
 
 	return shim.Error("Invalid Function Name: " + funcName)
@@ -95,6 +98,20 @@ func (privCode *PrivChaincode) Get(stub shim.ChaincodeStubInterface) peer.Respon
 	resultString = "{open:\"" + string(dataOpen) + "\", secret:\"" + string(dataSecret) + "\" , error:\"" + accessError + "\"}"
 
 	return shim.Success([]byte(resultString))
+}
+
+// Exercise solution
+// Del gets the value of token from both collections
+func (privCode *PrivChaincode) Del(stub shim.ChaincodeStubInterface, params []string) peer.Response {
+	// Check for args count MUST be done - not being done here for clarity
+	CollectionName := params[0]
+
+	err := stub.DelPrivateData(CollectionName, "token")
+	if err != nil {
+		return shim.Error("Error=" + err.Error())
+	}
+
+	return shim.Success([]byte("true"))
 }
 
 // Chaincode registers with the Shim on startup
