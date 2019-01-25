@@ -84,8 +84,19 @@ Exercise
 ========
 Extend the priv chaincode - add a function to delete the key in specific collection
 
-set-chain-env.sh -i '{"Args": ["Del", "AcmePrivate"]}'
+. set-env.sh acme
+set-chain-env.sh -i '{"Args": ["Set","AcmeBudgetOpen", "Acme has set the OPEN data"]}'
 chain.sh invoke
+set-chain-env.sh -i '{"Args": ["Set","AcmePrivate", "Acme has set the SECRET data"]}'
+chain.sh invoke
+
+
+chain.sh query
+set-chain-env.sh -i '{"Args": ["Del", "AcmeBudgetOpen"]}'
+chain.sh invoke
+
+chain.sh query
+
 
 
 
