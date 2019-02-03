@@ -12,7 +12,8 @@ CC_VERSION=2.0
 CC_CHANNEL_ID=airlinechannel
 
 # Setup the logging level for peer binary
-export CORE_LOGGING_LEVEL='ERROR'
+# export CORE_LOGGING_LEVEL='ERROR'
+export FABRIC_LOGGING_SPEC='ERROR'
 
 # If you would like to generate a unique CC_NAME everytime
 # DO NOT USE THIS in 'dev' mode

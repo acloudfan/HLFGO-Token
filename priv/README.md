@@ -98,7 +98,9 @@ chain.sh invoke
 chain.sh query
 
 
-
+Experimental
+============
+set-chain-env.sh -i '{"Args": ["Del", "MemberOnlyTest"]}'
 
 Testing in Dev Mode
 ====================

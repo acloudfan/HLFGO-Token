@@ -48,6 +48,10 @@ func (privCode *PrivChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Res
 	} else if funcName == "Del" {
 
 		return privCode.Del(stub, params)
+
+	} else if funcName == "MemberOnlyTest" {
+
+		return privCode.Del(stub, params)
 	}
 
 	return shim.Error("Invalid Function Name: " + funcName)
@@ -112,6 +116,26 @@ func (privCode *PrivChaincode) Del(stub shim.ChaincodeStubInterface, params []st
 	}
 
 	return shim.Success([]byte("true"))
+}
+
+// Experimental only :) Do not use
+// MemberOnlyTest reads the private data & sets it in a chaincode state key tokenOpen, tokenSecret
+func (privCode *PrivChaincode) MemberOnlyTest(stub shim.ChaincodeStubInterface)  peer.Response {
+	// Read the open data
+	dataOpen, err1 := stub.GetPrivateData("AcmeBudgetOpen", "token")
+	if err1 != nil {
+		dataOpen = []byte(err1.Error())
+	}
+
+	// Read the acme private data
+	dataSecret, err2 := stub.GetPrivateData("AcmePrivate", "token")
+	if err2 != nil {
+		dataSecret = []byte(err2.Error())
+	}
+
+	resultString := "{open:\"" + string(dataOpen) + "\", secret:\"" + string(dataSecret) + "\"}"
+
+	return shim.Success([]byte(resultString))
 }
 
 // Chaincode registers with the Shim on startup
