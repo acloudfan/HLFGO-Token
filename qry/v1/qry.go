@@ -35,25 +35,15 @@ type SimpleToken struct {
 }
 
 // Init Implements the Init method
+// args[0]=Start index, args[1]=Count of records
+// If args not provided then Initializes the state with 10 records (key1 to key10)
 func (token *QueryChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 
 	// Get the function name and parameters
 	_, args := stub.GetFunctionAndParameters()
-	var startIndex, recordCount int64
-	if len(args) < 2 {
-		startIndex = 1
-		recordCount = 10
-	} else {
-		startIndex, _ = strconv.ParseInt(args[0], 10, 64)
-		recordCount, _ = strconv.ParseInt(args[1], 10, 64)
-	}
-
-	// Simply print a message
-	fmt.Println("Init executed in qry")
-
 
 	// Add the data
-	token.SetupSampleData(stub,int32(startIndex),int32(recordCount))
+	token.SetupSampleData(stub,args)
 
 	// Return success
 	return shim.Success(nil)
@@ -76,12 +66,16 @@ func (token *QueryChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 }
 
 // GetTokenByRange executes the Range query on state data
+// Returns the data in the specified key range
+// args[0]=startKey   args[1]=endKey
 func (token *QueryChaincode) GetTokenByRange(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
+	// Check the number of args
 	if len(args) < 2 {
 		return shim.Error("MUST provide start & end Key!!")
 	}
 
+	// Get the data by range
 	QryIterator, err := stub.GetStateByRange(args[0], args[1])
 	if err != nil {
 		fmt.Printf("Error=" + err.Error())
@@ -90,6 +84,7 @@ func (token *QueryChaincode) GetTokenByRange(stub shim.ChaincodeStubInterface, a
 
 	var counter = 0
 	var resultJSON = "["
+	// Read the returned results in a loop
 	for QryIterator.HasNext() {
 
 		// Hold pointer to the query result
@@ -102,8 +97,7 @@ func (token *QueryChaincode) GetTokenByRange(stub shim.ChaincodeStubInterface, a
 		if err != nil {
 			fmt.Println("Err=" + err.Error())
 		} else {
-			// fmt.Println(resultKV.GetKey())
-			// fmt.Println(string(resultKV.GetValue()))
+			// Create the data string
 			var tokenData string
 			tokenData = "{\"key\":\"" + resultKV.GetKey() + "\",\"token\":" + string(resultKV.GetValue()) + "}"
 			if counter > 0 {
@@ -190,12 +184,23 @@ func (token *QueryChaincode) GetTokenByRangeWithPagination(stub shim.ChaincodeSt
 }
 
 
-/**
- * SetupSampleData creates multiple instances of the SimpleToken
- * Reuires the startIndex & the count of records to be created in the State DB
- * Once data is setup, we will use it for querying using range function
- **/
-func (token *QueryChaincode) SetupSampleData(stub shim.ChaincodeStubInterface,startIndex,recordCount int32) {
+// SetupSampleData creates multiple instances of the SimpleToken
+// Reuires the startIndex & the count of records to be created in the State DB
+// Once data is setup, we will use it for querying using range function
+func (token *QueryChaincode) SetupSampleData(stub shim.ChaincodeStubInterface,args []string) {
+
+	var startIndex, recordCount int64
+	if len(args) < 2 {
+		startIndex = 1
+		recordCount = 10
+	} else {
+		// error not being checked (to keep code simple)
+		startIndex, _ = strconv.ParseInt(args[0], 10, 64)
+		recordCount, _ = strconv.ParseInt(args[1], 10, 64)
+	}
+
+	// Simply print a message
+	fmt.Printf("Init executed in qry   startIndex=%d   recordCount=%d \n", startIndex, recordCount)
 
 	var simple SimpleToken
 	for i := startIndex; i < (startIndex+recordCount); i++ {
@@ -207,8 +212,6 @@ func (token *QueryChaincode) SetupSampleData(stub shim.ChaincodeStubInterface,st
 		jsonSimple, _ := json.Marshal(simple)
 		// Add it to the state DB
 		stub.PutState("key"+iStr, jsonSimple)
-
-		fmt.Println("key"+iStr)
 	}
 
 	fmt.Printf("Initialized Chaincode with %d Tokens ", recordCount)
