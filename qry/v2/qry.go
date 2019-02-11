@@ -31,6 +31,9 @@ import (
 type QueryChaincode struct {
 }
 
+// Object type constant
+const objectType = "owner~country~symbol"
+
 // TokenBalance represent balances of different type of tokens
 type TokenBalance struct {
 	Symbol  string `json:"symbol"`  // symbol of the token
@@ -39,7 +42,6 @@ type TokenBalance struct {
 	Balance uint   `json:"balance"` // balance of the token
 }
 
-const objectType = "owner~country~symbol"
 
 // Init Implements the Init method
 func (token *QueryChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
@@ -58,8 +60,10 @@ func (token *QueryChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	funcName, args := stub.GetFunctionAndParameters()
 
 	if funcName == "getStateOnKey" {
+		// Query with GetState
 		return token.GetTokenByCompositeKey(stub, args)
 	} else if funcName == "getStateRangeOnKey" {
+		// Query with GetStateByPartialCompositeKey
 		return token.GetTokensByPartialCompositeKey(stub, args)
 	}
 
