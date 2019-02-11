@@ -58,6 +58,7 @@ func (token *QueryChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respo
 	if funcName == "GetTokenByRange" {
 		return token.GetTokenByRange(stub, args)
 	} else if funcName == "GetTokenByRangeWithPagination" {
+		// To be implemented in the exercise
 		return token.GetTokenByRangeWithPagination(stub, args)
 	}
 
@@ -117,71 +118,7 @@ func (token *QueryChaincode) GetTokenByRange(stub shim.ChaincodeStubInterface, a
 	return shim.Success([]byte(resultJSON))
 }
 
-// GetTokenByRangeWithPagination executes the stub funtion GetStateByRangeWithPagination
-func (token *QueryChaincode) GetTokenByRangeWithPagination(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
-	// Check the number of arguments 
-	// startKey = arg[0]  endKey = arg[1]   pagesize = arg[2]
-	if len(args) < 3 {
-		return shim.Error("MUST provide start, end Key & Page size!!")
-	}
-
-	// The pagesize will be int64
-	pagesize, _ := strconv.ParseInt(string(args[2]),10,32)
-	bookmark := ""
-	var counter = 0
-	var pageCounter = 0
-	var resultJSON = "["
-	var hasMorePages = true
-
-	var QryIterator 	shim.StateQueryIteratorInterface
-	var QueryMetaData 	*peer.QueryResponseMetadata
-	var err		error
-
-	for hasMorePages {
-		QryIterator, QueryMetaData, err = stub.GetStateByRangeWithPagination(args[0], args[1], int32(pagesize), bookmark)
-		if err != nil {
-			fmt.Printf("Error=" + err.Error())
-			return shim.Error(err.Error())
-		}
-
-		var arr ="["
-		var resultKV *queryresult.KV
-		for QryIterator.HasNext() {
-			
-
-			// fmt.Printf("Meta Data: %d   %s", QueryMetaData.FetchedRecordsCount, QueryMetaData.Bookmark)
-
-			// Get the next element
-			resultKV, err = QryIterator.Next()
-			
-			// Increment Counter
-			counter++
-			if arr != "[" {
-				arr += ","
-			}
-			arr += "\"" + resultKV.GetKey() + "\""
-		}
-		arr +="]"
-		// Increment Page Counter
-		pageCounter++
-
-		if resultJSON != "[" {
-			resultJSON += ","
-		}
-
-		resultJSON += "{\"page\":"+strconv.Itoa(pageCounter)+",\"keys\":"+arr+"}"
-		bookmark = QueryMetaData.Bookmark
-		hasMorePages = (bookmark != "")
-
-		fmt.Printf("Page: %d   Bookmark: %s \n", pageCounter, bookmark)
-	}
-	resultJSON += "]"
-
-	resultJSON = "{\"count\":"+strconv.Itoa(counter)+",\"pages\":"+resultJSON+"}"
-
-	return shim.Success([]byte(resultJSON))
-}
 
 
 // SetupSampleData creates multiple instances of the SimpleToken
