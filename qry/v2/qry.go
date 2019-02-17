@@ -89,17 +89,13 @@ func (token *QueryChaincode) GetTokenByCompositeKey(stub shim.ChaincodeStubInter
 
 	fmt.Printf("Composite Key=%s\n", qryKey)
 
-	// var counter = 0
 	var resultJSON = "["
-
+	// Get the data
 	dat, _ := stub.GetState(qryKey)
 
 	// Set the data in result string
 	resultJSON += string(dat)
-
 	resultJSON += "]"
-
-	fmt.Println("dat=" + string(dat))
 
 	return shim.Success([]byte(resultJSON))
 }
@@ -120,6 +116,7 @@ func (token *QueryChaincode) GetTokensByPartialCompositeKey(stub shim.ChaincodeS
 	}
 	var resultJSON = "["
 	counter := 0
+	// Iterate to read the keys returned
 	for QryIterator.HasNext() {
 		// Hold pointer to the query result
 		var resultKV *queryresult.KV
@@ -135,11 +132,11 @@ func (token *QueryChaincode) GetTokensByPartialCompositeKey(stub shim.ChaincodeS
 		// Split the composite key and send it as part of the result set
 		key, arr, _ := stub.SplitCompositeKey(resultKV.GetKey())
 		fmt.Println(key)
-		fmt.Println(arr)
 		resultJSON += " [" + strings.Join(arr, "~") + "] "
 		counter++
 
 	}
+	// Closing
 	QryIterator.Close()
 
 	resultJSON += "]"
