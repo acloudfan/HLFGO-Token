@@ -1,0 +1,23 @@
+{
+    "selector": {
+       "$or": [
+          {
+             "txnDate": "2018-01-02T00:00:00Z"
+          },
+          {
+             "paymentCount": {
+                "$gt": 1800000
+             }
+          }
+       ]
+    },
+    "fields": [
+       "txnDate",
+       "paymentCount",
+       "generatedCoins"
+    ],
+    "execution_stats":true,
+    "sort": [
+        {"txnDate": "desc"}
+    ]
+ }

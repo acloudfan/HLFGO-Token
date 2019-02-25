@@ -80,7 +80,7 @@ func (token *QueryChaincode) GetTokenByRangeWithPagination(stub shim.ChaincodeSt
 
 		resultJSON += "{\"page\":"+strconv.Itoa(pageCounter)+",\"keys\":"+arr+"}"
 
-		// Get stat key for the next page
+		// Get start key for the next page
 		bookmark = queryMetaData.Bookmark
 
 		// boomark = bland indicates not more records

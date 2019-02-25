@@ -9,4 +9,8 @@ v2
 ===
 Composite key and splitting
 
+v3
+===
+Rich queries
+
 

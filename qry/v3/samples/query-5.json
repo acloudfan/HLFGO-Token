@@ -1,0 +1,11 @@
+{
+    "selector": {
+       "usdPrice": {
+          "$gte": 5000
+       }
+    },
+    "fields": [
+       "txnDate",
+       "usdPrice"
+    ]
+ }
