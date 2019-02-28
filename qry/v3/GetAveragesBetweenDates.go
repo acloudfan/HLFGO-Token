@@ -53,6 +53,7 @@ func GetAveragesBetweenDates(stub shim.ChaincodeStubInterface,args []string) pee
 		   ]
 		}
 	 }`
+	 
 	// Delcare the vars to hold the averages
 	var AvgTxnVolume uint64 
 	var AvgPaymentCount uint64

@@ -18,6 +18,7 @@ docType="\"CryptocoinTransactions\""
 COUNTER=1
 for item in $arr;
 do
+
   txnDate=$(echo $item | jq .date)
   txnVolume=$(echo $item | jq .txVolume)
   # remove decimal part

@@ -1,14 +1,17 @@
-Requires CouchDB to be enabled
+PS:
+1. Testing of functions in DEV mode
+2. Testing of Indexes in NET mode (refer below)
 
-Chaincode Setup
-===============
+===========================
+Chaincode Setup in Dev mode
+===========================
 # Launch the environment with CouchDB enabled
 dev-init.sh -d -s
 
 # Deploy the chaincode
 . set-env.sh  acme
 reset-chain-env.sh
-set-chain-env.sh -n CryptocurrencyTxn -v 1.0 -p token/qry/v3 -c '{"Args":[]}'
+set-chain-env.sh -n CryptocurrencyTxn -v 1.0 -p token/qry/v3 -c '{"Args":[]}' -C airlinechannel
 cc-run.sh
 
 chain.sh install
@@ -43,7 +46,9 @@ chain.sh query
 
 GetAveragesBetweenDates (Exercise)
 ==================================
+
 set-chain-env.sh -q '{"Args":["GetAveragesBetweenDates","2009-01-01T00:00:00Z","2019-02-15T00:00:00Z"]}'
+
 chain.sh query
 
 set-chain-env.sh -q '{"Args":["GetAveragesBetweenDates","2017-12-01T00:00:00Z","2018-06-31T00:00:00Z"]}'
@@ -52,7 +57,72 @@ chain.sh query
 set-chain-env.sh -q '{"Args":["GetAveragesBetweenDates","2017-12-01T00:00:00Z","2018-01-31T00:00:00Z"]}'
 chain.sh query
 
+=====================================================
+Chaincode setup in net mode - For Index related tests
+=====================================================
+#1 Start the env in net mode
+dev-init.sh -d -s
+#2 Setup org context
+. set-env.sh  acme
+#3 Setup the chain env
+set-chain-env.sh -n CryptocurrencyTxn -v 1.0 -p token/qry/v3 -c '{"Args":[]}' -C airlinechannel
 
+#4 Install & Instantiate
+chain.sh install
+chain.sh instantiate
+
+#5 Setup the data
+Run the script under token/qry/v3/data
+. set-env.sh acme
+./setup-data.sh
+
+Index Performance Testing
+=========================
+Part-1  Execute the function GetPriceByDate without index to measure the time
+======
+- Setup query arguments
+. set-env.sh acme
+set-chain-env.sh -q '{"Args":["GetDatesByPrice","19000"]}'
+- Time the execution
+time chain.sh query
+
+PS: Note down the real execution time
+
+Part-2  Install the price index
+======
+- Copy the index file samples/index-OnUsdPrice.json to META-INF/statedb/couchdb/indexes
+- Upgrade the chaincode
+chain.sh  upgrade-auto
+
+Confirm on Futon that index is installed
+
+Part-3  Examine the performance gain
+======
+- Setup query arguments
+set-chain-env.sh -q '{"Args":["GetDatesByPrice","15000"]}'
+- Time the execution
+time chain.sh query
+
+PS: You should see marked difference in performance
+
+
+Testing the Sorting
+===================
+1. Test the function    GenerateVolumeReport
+
+set-chain-env.sh -q '{"Args":["GenerateVolumeReport","2019-02-01T00:00:00Z","2019-02-07T00:00:00Z"]}'
+chain.sh query
+
+PS: This will fail as the sort requires the index
+
+2. Package the index JSON and upgrade
+
+- Copy the index file samples/index-OnTxnDateVolume.json to META-INF/statedb/couchdb/indexes
+
+3. Test again - this time it would work
+
+set-chain-env.sh -q '{"Args":["GenerateVolumeReport","2019-02-01T00:00:00Z","2019-02-07T00:00:00Z"]}'
+chain.sh query
 
 Queries/Selectors
 =================

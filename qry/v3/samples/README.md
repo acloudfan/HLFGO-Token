@@ -13,3 +13,21 @@ Sample Index File
 =================
 index-1.json        Index on txnDate & txnVolume
 index-2.json        
+
+
+{
+		"selector": {
+		   "docType": "CryptocoinTransactions",
+		   "$and": [
+			  {
+				 "txnDate": {
+					"$gte": "2009-01-01T00:00:00Z"
+                 }
+              },
+              {
+				 "txnDate": {
+					"$lte": "2019-02-15T00:00:00Z"
+                 }
+              }
+        }
+}

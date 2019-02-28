@@ -68,65 +68,15 @@ func (token *CryptocoinChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.
 		return GetDatesByPrice(stub, args)
 	} else if funcName == "GetAveragesBetweenDates"{
 		return GetAveragesBetweenDates(stub, args)
+	} else if funcName == "GenerateVolumeReport"{
+		return GenerateVolumeReport(stub, args)
 	}
-
-	
 
 	// This is not good
 	return shim.Error(("Bad Function Name = !!!"))
 }
 
-// // ExecuteRichQuery executes the passed query on the data
-// func ExecuteRichQuery(stub shim.ChaincodeStubInterface,args []string) peer.Response {
 
-// 	// Query JSON received as argument
-// 	qry:=args[0]
-
-// 	// Print the received query on the console
-// 	fmt.Printf("Query JSON=%s \n", qry)
-
-// 	// GetQueryResult
-// 	QryIterator, err := stub.GetQueryResult(qry)
-
-// 	// Return if there is an error
-// 	if err != nil {
-// 		fmt.Println(err.Error())
-// 		return shim.Success([]byte("Error: "+err.Error()))
-// 	}
-
-// 	// Iterate through the result set
-// 	counter := 0
-// 	for QryIterator.HasNext() {
-// 		// Hold pointer to the query result
-// 		var resultKV *queryresult.KV
-// 		var err error
-
-// 		// Get the next element
-// 		resultKV, err = QryIterator.Next()
-
-// 		// Return if there is an error
-// 		if err != nil {
-// 			fmt.Println("Err=" + err.Error())
-// 			return shim.Success([]byte("Error in parse: "+err.Error()))
-// 		}
-
-// 		// Increment the counter
-// 		counter++
-// 		key := resultKV.GetKey()
-// 		value := string(resultKV.GetValue())
-
-// 		// Print the receieved result on the console
-// 		fmt.Printf("Result# %d   %s   %s \n", counter, key, value)
-		
-// 	}
-
-// 	// Close the iterator
-// 	QryIterator.Close()
-
-// 	// Return the count
-// 	total := "Count="+strconv.Itoa(counter)
-// 	return shim.Success([]byte(total))
-// }
 
 // AddData adds the data to the state
 func AddData(stub shim.ChaincodeStubInterface,args []string) peer.Response {

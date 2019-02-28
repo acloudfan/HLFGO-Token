@@ -35,6 +35,7 @@ func GetDatesByPrice(stub shim.ChaincodeStubInterface,args []string) peer.Respon
 	// Query string - multi line strings use backward single quote
 	query := `{
 		"selector": {
+		   "docType": "CryptocoinTransactions",
 		   "usdPrice": {
 			  "$gte": `
 	query += args[0] 
