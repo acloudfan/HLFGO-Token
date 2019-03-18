@@ -11,7 +11,6 @@ source  utest.sh
 source cc.env.sh
 
 # Setup the logging level for peer binary
-# export CORE_LOGGING_LEVEL='ERROR'
 export FABRIC_LOGGING_SPEC='ERROR'
 
 # Set the Organization Context to acme

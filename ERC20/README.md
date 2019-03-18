@@ -50,3 +50,8 @@ Launch the events utility
 
 In a second terminal execute the invoke - observe transfer events in terminal 1
 > chain.sh invoke
+
+
+Node version
+============
+https://github.com/grepruby/ERC20-Token-On-Hyperledger
