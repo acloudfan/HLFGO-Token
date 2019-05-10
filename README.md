@@ -1,7 +1,7 @@
 # PART of a Online Course: 
 Mastering Fabric Chaincode Development using GoLang
 
-Checkout    :    http://bcmentors.com
+Checkout    :    http://bcmentors.com/courses
 
 
 # HLFGO-Token
