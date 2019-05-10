@@ -1,3 +1,9 @@
+# PART of a Online Course: 
+Mastering Fabric Chaincode Development using GoLang
+
+Checkout    :    http://bcmentors.com
+
+
 # HLFGO-Token
 Multiple versions of the chaincode
 
