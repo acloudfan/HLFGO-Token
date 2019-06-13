@@ -1,6 +1,6 @@
 Launch the environment
 ======================
-Dev  mode:     dev-init.sh   dev  
+Dev  mode:     dev-init.sh   -d  
 
 Try out v1/token
 ================
