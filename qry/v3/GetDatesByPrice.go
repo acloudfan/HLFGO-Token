@@ -78,7 +78,7 @@ func GetDatesByPrice(stub shim.ChaincodeStubInterface,args []string) peer.Respon
 				if arr != "[" {
 					arr += ","
 				}
-				arr += "\"" + string(resultKV.GetValue()) + "\""
+				arr += string(resultKV.GetValue())
 			}
 			arr +="]"
 
